@@ -9,7 +9,7 @@ This repository contains code and resources for participating in the [Sign Langu
 
 The challenge is to create a machine learning solution that can classify images of sign language gestures. This task is critical for improving accessibility tools for the deaf and hard-of-hearing communities.
 
-**Competition link**: [Sign Language Kaggle Competition](https://www.kaggle.com/competitions/sign-language-kaggle-comp)
+**Competition link:** [Sign Language Kaggle Competition](https://www.kaggle.com/competitions/sign-language-kaggle-comp)
 
 ## Dataset
 
@@ -22,22 +22,49 @@ The dataset for this competition can be found on the [competition page's Data se
 
 *Note:* You may need to accept the competition rules and login on Kaggle to access the dataset files.
 
-## Notebook Overview
+## Notebook Summary
 
-The main notebook in this repository walks through the entire solution pipeline for this competition. It covers:
-- Exploratory data analysis and visualization
-- Data preprocessing and augmentation
-- Model selection and architecture design
-- Training and evaluation on the provided dataset
-- Generating predictions and preparing submissions for the competition
+The main notebook in this repository outlines the entire solution pipeline for the competition. The process includes:
 
-The techniques and code in the notebook are tailored for optimal competition performance, reflected by the current leaderboard rank.
+- **Exploratory Data Analysis (EDA):** Insightful plots and statistics to better understand feature distributions and class balance.
+- **Data Preprocessing & Augmentation:** Image normalization, resizing, and data augmentation strategies to improve model generalization.
+- **Model Building:** Design and implementation of deep learning architectures tailored for image classification, with experimentation on different models and hyperparameters.
+- **Training & Evaluation:** Training the model on the competition dataset, monitoring metrics such as accuracy and loss, and evaluating the model's performance on validation data.
+- **Submission Preparation:** Generating and formatting predictions as required for Kaggle competition submission.
+
+The methodology in this notebook enabled me to achieve the second-place ranking on the competition leaderboard.
+
+## Deploying the Model with FastAPI and ngrok
+
+The trained model can be deployed as an API using [FastAPI](https://fastapi.tiangolo.com/) to serve predictions in real time. To make the API accessible from outside your local environment (such as for testing or demonstration purposes), [ngrok](https://ngrok.com/) can be used to tunnel your local FastAPI server to a public URL.
+
+### Deployment Steps
+
+1. **Export the trained model:**  
+   After training, save your best-performing model (e.g., `model.pth` for PyTorch or `model.h5` for Keras).
+
+2. **FastAPI Application:**  
+   Use FastAPI to create an API endpoint (e.g., `/predict`) that loads the trained model and accepts image input for prediction.
+
+3. **Run the FastAPI server locally:**  
+   ```bash
+   uvicorn api:app --reload
+   ```
+   (Assuming `api.py` contains your FastAPI app.)
+
+4. **Expose the API with ngrok:**  
+   Start ngrok to tunnel traffic to your local FastAPI server, which typically runs on port 8000:
+   ```bash
+   ngrok http 8000
+   ```
+   ngrok will provide a public URL which can be shared for prediction requests.
 
 ## Repository Structure
 
 - `notebooks/` – Jupyter notebooks for data exploration, training, and evaluation.
 - `src/` – Source code for data processing, model building, and utilities.
 - `models/` – Saved model files and checkpoints.
+- `api.py` – FastAPI application for model inference.
 - `README.md` – This file.
 
 ## Getting Started
@@ -59,6 +86,9 @@ The techniques and code in the notebook are tailored for optimal competition per
 
 4. **Run notebooks or scripts:**
     - Explore or train your models using the provided notebooks and scripts.
+
+5. **Deploy the API:**
+    - Follow the deployment steps above to serve your model.
 
 ## Contributing
 
